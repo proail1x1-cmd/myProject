@@ -1,0 +1,173 @@
+.auth-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 400px;
+    padding: 28px 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    margin: 20px auto;
+    box-sizing: border-box;
+}
+
+.auth-header h2 {
+    color: #1d3557;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: 0 0 6px 0;
+}
+
+.auth-header p {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin: 0 0 20px 0;
+}
+
+.tab-buttons {
+    display: flex;
+    background: #f1f3f5;
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #6c757d;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    background: #ffffff;
+    color: #1d3557;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 16px;
+    text-align: right;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1d3557;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 10px 38px 10px 12px;
+    border: 1.5px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.input-wrapper input:focus {
+    border-color: #457b9d;
+}
+
+.input-icon {
+    position: absolute;
+    right: 10px;
+    width: 18px;
+    height: 18px;
+    fill: #6c757d;
+}
+
+.form-options {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 0.8rem;
+    margin-bottom: 18px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #6c757d;
+    cursor: pointer;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #1d3557, #457b9d);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(29, 53, 87, 0.2);
+}
+
+.form-content {
+    display: none;
+}
+
+.form-content.active {
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* حاوية الزر */
+.quiz-btn-container {
+    margin-top: 18px;
+    text-align: center;
+}
+
+/* تصميم الزر البارز الواضح */
+.btn-quiz {
+    padding: 10px 24px;
+    background-color: #ffffff; /* خلفية بيضاء تبرز فوق الأزرق */
+    color: #1d3557; /* لون النص أزرق غامق */
+    font-size: 1rem;
+    font-weight: bold;
+    border: 2px solid #ffffff;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+/* تأثير عند اللمس أو التمرير */
+.btn-quiz:hover, .btn-quiz:active {
+    background-color: #e63946; /* يتغير للأحمر ليتناسق مع العنوان التالي */
+    color: #ffffff; /* النص يتحول للأبيض */
+    border-color: #e63946;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(230, 57, 70, 0.4);
+}
+ 

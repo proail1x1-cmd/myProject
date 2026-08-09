@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap');
+
+:root {
+    --primary: #4f46e5;
+    --primary-light: #eef2ff;
+    --primary-hover: #4338ca;
+    --bg-surface: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border: #e2e8f0;
+    --radius: 16px;
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+}
+
+/* Container الرئيسي */
+#viewQu {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.quiz-container {
+    background: var(--bg-surface);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* الترويسة: المؤقت ورقم السؤال */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px dashed var(--border);
+}
+
+.progress-tag {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--primary-light);
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+.timer-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 20px;
+    direction: ltr; /* لحفظ شكل الساعة والأرقام */
+}
+
+/* السؤال */
+.question-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+/* قائمة الخيارات */
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.option-btn {
+    width: 100%;
+    padding: 14px 18px;
+    text-align: right;
+    background: #f8fafc;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.option-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+/* الخيار المحدد */
+.option-btn.selected {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+}
+
+/* الأزرار السفلية (رجوع / التالي) */
+.quiz-footer {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.next-btn {
+    flex: 2;
+    padding: 12px;
+    background: var(--primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    transition: background 0.2s, transform 0.1s;
+}
+
+.next-btn:active {
+    transform: scale(0.98);
+}
+
+.next-btn.back {
+    flex: 1;
+    background: #f1f5f9;
+    color: var(--text-secondary);
+    box-shadow: none;
+    border: 1px solid var(--border);
+}
+
+.next-btn.back:hover {
+    background: #e2e8f0;
+}
+
+/* 🟢🔴 شاشة النتيجة */
+.results-box {
+    text-align: right;
+}
+
+.result-card {
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.result-card.passed {
+    background-color: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+}
+
+.result-card.failed {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.result-score-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.review-item {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+}
+
+.review-q {
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.text-correct { color: #16a34a; font-weight: 700; }
+.text-wrong { color: #dc2626; font-weight: 700; }
+
+.explanation-box {
+    margin-top: 8px;
+    padding: 8px;
+    background: #ffffff;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    border-right: 3px solid var(--primary);
+}
