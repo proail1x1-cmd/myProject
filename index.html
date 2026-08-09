@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملخص الكيمياء - الوحدة الثانية (مجموعة الكربون IVA)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="style/style.css" type="text/css" />
+<link rel="stylesheet" href="style/styleLogin.css" type="text/css" />
+<link rel="stylesheet" href="style/styleTest.css" type="text/css" />
+
+    
+</head>
+<body>
+<!-- الحاوية الرئيسية لنظام الدخول -->
+<div class="user-card-container">
+
+    <!-- زر استرجاع البطاقة في حال إخفائها كلياً -->
+<button class="restore-card-btn" id="restoreCardBtn" onclick="toggleFullHide()">
+    <span>👤 إظهار بطاقة الطالب</span>
+</button>
+
+<!-- الحاوية الرئيسية لنظام الدخول والبطاقة المثبتة -->
+<div class="user-card-container" id="userCardContainer">
+
+    <!-- البطاقة الرئيسية المثبتة -->
+    <div class="user-card" id="userCard">
+        
+        <!-- زر طي/انزلاق البطاقة للأعلى (سهم ^) -->
+        <button class="toggle-collapse-btn" onclick="toggleCardCollapse()" title="طي / توسيع البطاقة">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/>
+            </svg>
+        </button>
+
+        <div class="user-info-row">
+            <div class="user-details">
+                <div class="user-icon">👤</div>
+                <div class="user-name" id="TopStudent">جار التحميل...</div>
+            </div>
+            
+            <div class="score-badge">
+                <span>الدرجة:</span>
+                <span class="score-num" id="TopGrade">0</span>
+            </div>
+        </div>
+
+        <button class="more-btn" onclick="openMoreModal()">
+            <span>عرض الترتيب والمزيد</span>
+            <svg viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- النافذة المنبثقة لترتيب الطلاب -->
+    <div class="modal-overlay" id="studentsModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span class="modal-title">🏆 جدول ترتيب الأوائل</span>
+                <button class="close-btn" onclick="closeMoreModal()">✕</button>
+            </div>
+            <div class="modal-body" id="studentsList">
+                <!-- سيتم ترتيب وتوليد القائمة عبر JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <!-- النافذة المنبثقة لترتيب الطلاب -->
+    <div class="modal-overlay" id="studentsModal1" onclick="closeModalOnOverlay(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span class="modal-title">🏆 جدول ترتيب الأوائل</span>
+                <button class="close-btn" onclick="closeMoreModal()">✕</button>
+            </div>
+            <div class="modal-body" id="studentsList">
+                <!-- سيتم ترتيب وتوليد القائمة عبر JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="auth-card" id="loginD">
+    <div class="auth-header">
+        <h2>منصة الطلاب 👋</h2>
+        <p>سجل دخولك أو أنشئ حساباً جديداً للمتابعة</p>
+    </div>
+
+    <div class="tab-buttons">
+        <button type="button" class="tab-btn active" onclick="switchAuthTab('login')">تسجيل الدخول</button>
+        <button type="button" class="tab-btn" onclick="switchAuthTab('signup')">حساب جديد</button>
+    </div>
+
+    <!-- 1. نموذج تسجيل الدخول (رقم التعريف + كلمة المرور) -->
+    <form id="login-form" class="form-content active" onsubmit="event.preventDefault();">
+        <div class="form-group">
+            <label>رقم التعريف / الطالب</label>
+            <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                <input type="number" id="login-student-id" placeholder="أدخل رقم التعريف الخاص بك" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>كلمة المرور</label>
+            <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                <input type="password" id="login-password" placeholder="••••••••" required>
+            </div>
+        </div>
+
+        <div class="form-options">
+            <label class="remember-me">
+                <input type="checkbox"> تذكرني
+            </label>
+        </div>
+
+        <button type="submit" class="btn-submit">دخول</button>
+    </form>
+
+    <!-- 2. نموذج إنشاء حساب جديد (اسم الطالب + رقم التعريف + كلمة المرور) -->
+    <form id="signup-form" class="form-content" onsubmit="event.preventDefault();">
+        <div class="form-group">
+            <label>اسم الطالب الرباعي</label>
+            <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <input type="text" id="signup-fullname" placeholder="أدخل اسمك الرباعي كاملًا" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>رقم التعريف / الطالب</label>
+            <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                <input type="number" id="signup-student-id" placeholder="أدخل رقم التعريف الخاص بك" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>كلمة المرور</label>
+            <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                <input type="password" id="signup-password" placeholder="••••••••" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit">إنشاء حساب جديد</button>
+    </form>
+</div>
+
+
+
+
+
+
+
+<!-- الحاوية الأساسية لعرض الاختبار -->
+<div id="viewQu" style="display: none;">
+
+    <div class="test" id="test">
+        <div class="quiz-container">
+            
+            <!-- واجهة الأسئلة -->
+            <div id="quizScreen">
+                <div class="quiz-header">
+                    <span class="progress-tag" id="progressText">جاري التحميل...</span>
+                    <div class="timer-tag">⏳ <span id="timerText">30:00</span></div>
+                </div>
+
+                <div id="questionText" class="question-title">اسم السؤال</div>
+                <div id="optionsContainer" class="options-list">الخيارات</div>
+
+                <div class="quiz-footer">
+                    <button class="next-btn back" id="backBtn" onclick="back()">رجوع</button>
+                    <button class="next-btn" id="nextBtn" onclick="submitAndNext()">التالي</button>
+                </div>
+            </div>
+
+            <!-- واجهة التقرير والنتيجة النهائية مع الشرح -->
+            <div id="resultScreen" class="results-box" style="display: none;">
+                <div class="score-summary">
+                    <h3>نتيجة الاختبار</h3>
+                    <p id="finalScoreText"></p>
+                </div>
+                <h4 class="review-title">مراجعة الإجابات والتفسير العلمي:</h4>
+                <div id="reviewContainer"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<div class="container" style="display:none" id="loginSecc">
+
+    <header>
+        <h1>ملخص الكيمياء - الصف الثاني الثانوي</h1>
+        <p>الوحدة الثانية: عناصر المجموعة الرئيسية الرابعة (IVA - مجموعة الكربون)</p>
+        
+        <!-- زر بدء الاختبار -->
+        <div class="quiz-btn-container">
+            <button type="button" class="btn-quiz" onclick="startQuiz()">
+                اضغط هنا للاختبار 📝
+            </button>
+        </div>
+    </header>
+
+
+    <!-- أولاً: الأهم جداً -->
+    <div class="section-title high-importance">
+        <span>🔥</span> أولاً: الأهم جـداً (أساسيات الامتحانات والمفاهيم الجوهرية)
+    </div>
+
+    <div class="card card-high">
+        <h3>1. مواقع عناصر المجموعة الرابعة (IVA / Group 14) في الجدول الدوري</h3>
+        <p>تقع جميع هذه العناصر في العمود الرأسي رقم 14 (IVA) وتتوزع في الدورات كالتالي:</p>
+        
+        <!-- الحاوية المرنة للجدول -->
+        <!-- الحاوية المرنة للجدول -->
+<!-- الحاوية المرنة للجدول -->
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>العنصر</th>
+                <th>الرمز والعدد الذري</th>
+                <th>الدورة</th>
+                <th>التصنيف</th>
+                <th style="min-width: 250px;">التوزيع الإلكتروني الكامل (وبالغازات الخاملة)</th>
+                <th>توضيح وملاحظات</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>الكربون</td>
+                <td><sub>6</sub>C</td>
+                <td>الدورة الثانية</td>
+                <td>لا فلز</td>
+                <td style="direction: ltr; text-align: center;">
+                    <div style="font-family: monospace; font-size: 0.95rem;">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>2</sup></div>
+                    <hr style="border: none; border-top: 1px dashed #ccc; margin: 6px 0;">
+                    <div style="font-family: monospace; font-size: 0.9rem; color: #1d3557; font-weight: bold;"><sub>2</sub>[He] 2s<sup>2</sup> 2p<sup>2</sup></div>
+                </td>
+                <td>أساس الكيمياء العضوية والمركبات الحيوية، ويمتلك ظاهرة التآصل (جرافيت وألماس).</td>
+            </tr>
+            <tr>
+                <td>السيليكون</td>
+                <td><sub>14</sub>Si</td>
+                <td>الدورة الثالثة</td>
+                <td>شبه فلز</td>
+                <td style="direction: ltr; text-align: center;">
+                    <div style="font-family: monospace; font-size: 0.95rem;">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>2</sup></div>
+                    <hr style="border: none; border-top: 1px dashed #ccc; margin: 6px 0;">
+                    <div style="font-family: monospace; font-size: 0.9rem; color: #1d3557; font-weight: bold;"><sub>10</sub>[Ne] 3s<sup>2</sup> 3p<sup>2</sup></div>
+                </td>
+                <td>عنصر واسع الانتشار في القشرة الأرضية، ويُستخدم كمادة شبه موصلة رئيسية في صناعة الإلكترونيات.</td>
+            </tr>
+            <tr>
+                <td>الجرمانيوم</td>
+                <td><sub>32</sub>Ge</td>
+                <td>الدورة الرابعة</td>
+                <td>شبه فلز</td>
+                <td style="direction: ltr; text-align: center;">
+                    <div style="font-family: monospace; font-size: 0.95rem;">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup> 3d<sup>10</sup> 4s<sup>2</sup> 4p<sup>2</sup></div>
+                    <hr style="border: none; border-top: 1px dashed #ccc; margin: 6px 0;">
+                    <div style="font-family: monospace; font-size: 0.9rem; color: #1d3557; font-weight: bold;"><sub>18</sub>[Ar] 3d<sup>10</sup> 4s<sup>2</sup> 4p<sup>2</sup></div>
+                </td>
+                <td>عنصر رمادي بلمعان معدني، يُستخدم كشبه موصل وفي تصنيع الألياف البصرية وعدسات الأشعة تحت الحمراء.</td>
+            </tr>
+            <tr>
+                <td>القصدير</td>
+                <td><sub>50</sub>Sn</td>
+                <td>الدورة الخامسة</td>
+                <td>فلز (ضعيف)</td>
+                <td style="direction: ltr; text-align: center;">
+                    <div style="font-family: monospace; font-size: 0.95rem;">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup> 3d<sup>10</sup> 4s<sup>2</sup> 4p<sup>6</sup> 4d<sup>10</sup> 5s<sup>2</sup> 5p<sup>2</sup></div>
+                    <hr style="border: none; border-top: 1px dashed #ccc; margin: 6px 0;">
+                    <div style="font-family: monospace; font-size: 0.9rem; color: #1d3557; font-weight: bold;"><sub>36</sub>[Kr] 4d<sup>10</sup> 5s<sup>2</sup> 5p<sup>2</sup></div>
+                </td>
+                <td>فلز فضي طري وقابل للطرق، يُمتاز بمقاومته للتآكل ويُستخدم في طلاء المعادن وسبائك لحام الإلكترونيات.</td>
+            </tr>
+            <tr>
+                <td>الرصاص</td>
+                <td><sub>82</sub>Pb</td>
+                <td>الدورة السادسة</td>
+                <td>فلز (ضعيف)</td>
+                <td style="direction: ltr; text-align: center;">
+                    <div style="font-family: monospace; font-size: 0.95rem; word-break: break-word;">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup> 3d<sup>10</sup> 4s<sup>2</sup> 4p<sup>6</sup> 4d<sup>10</sup> 4f<sup>14</sup> 5s<sup>2</sup> 5p<sup>6</sup> 5d<sup>10</sup> 6s<sup>2</sup> 6p<sup>2</sup></div>
+                    <hr style="border: none; border-top: 1px dashed #ccc; margin: 6px 0;">
+                    <div style="font-family: monospace; font-size: 0.9rem; color: #1d3557; font-weight: bold;"><sub>54</sub>[Xe] 4f<sup>14</sup> 5d<sup>10</sup> 6s<sup>2</sup> 6p<sup>2</sup></div>
+                </td>
+                <td>فلز ثقيل ذو كثافة عالية، يُستخدم في بطاريات السيارات والحماية من الإشعاعات النووية وأشعة X.</td>
+            </tr>
+            <tr>
+                <td>الفليروفيوم <br><small style="color: #6c757d;">(الأنبيونكوادبوم)</small></td>
+                <td><sub>114</sub>Fl <br><small style="color: #6c757d;">(Uuq)</small></td>
+                <td>الدورة السابعة</td>
+                <td>فلز ضعيف / عنصر مشع</td>
+                <td style="direction: ltr; text-align: center;">
+                    <div style="font-family: monospace; font-size: 0.95rem; word-break: break-word;">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup> 3d<sup>10</sup> 4s<sup>2</sup> 4p<sup>6</sup> 4d<sup>10</sup> 4f<sup>14</sup> 5s<sup>2</sup> 5p<sup>6</sup> 5d<sup>10</sup> 5f<sup>14</sup> 6s<sup>2</sup> 6p<sup>6</sup> 6d<sup>10</sup> 7s<sup>2</sup> 7p<sup>2</sup></div>
+                    <hr style="border: none; border-top: 1px dashed #ccc; margin: 6px 0;">
+                    <div style="font-family: monospace; font-size: 0.9rem; color: #1d3557; font-weight: bold;"><sub>86</sub>[Rn] 5f<sup>14</sup> 6d<sup>10</sup> 7s<sup>2</sup> 7p<sup>2</sup></div>
+                </td>
+                <td>عنصر صناعي ثقيل جداً ومشع يُمعد معملياً، فترات عمر النصف لذراته قصيرة جداً ويقتصر استخدامه على الأبحاث.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+    </div>
+
+    <div class="card card-high">
+        <h3>2. تعريف وتأصل الكربون (التآصل)</h3>
+        <ul>
+            <li><strong>تعريف التآصل:</strong> وجود العنصر الواحد في أكثر من صورة؛ بحيث تختلف هذه الصور في الخواص الفيزيائية، وتتشابه في الخواص الكيميائية.</li>
+            <li><strong>الصور البلورية للكربون:</strong>
+                <ul>
+                    <li><strong>الماس:</strong> أشد صلابة بسبب وجود روابط تساهمية تربط كل ذرة كربون بـ 4 ذرات أخرى (بلورات ثمانية الأوجه).</li>
+                    <li><strong>الجرافيت:</strong> أكثر ليونة لأن بلوراته تتكون نتيجة ارتباط كل ذرة كربون بـ 3 ذرات أخرى (بلورات سداسية الأوجه).</li>
+                </ul>
+            </li>
+            <li><strong>الكربون المشع:</strong> يحتوي الكربون الطبيعي على نسبة ضئيلة من النظير C<sup>14</sup> الذي يستخدم في تقدير عمر الأحافير والأشجار المعمرة.</li>
+        </ul>
+    </div>
+
+    <div class="card card-high">
+        <h3>3. الخواص العامة لعناصر المجموعة</h3>
+        <ul>
+            <li><strong>التدرج من اللافلزية إلى الفلزية:</strong> تتدرج الصفة من الأعلى إلى الأسفل (تزيد الصفة الفلزية بزيادة العدد الذري):
+                <ul>
+                    <li><strong>الكربون (C<sup>6</sup>):</strong> لا فلز.</li>
+                    <li><strong>السيليكون (Si<sup>14</sup>) والجرمانيوم (Ge<sup>32</sup>):</strong> شبه فلز.</li>
+                    <li><strong>القصدير (Sn<sup>50</sup>) والرصاص (Pb<sup>82</sup>):</strong> فلز.</li>
+                </ul>
+            </li>
+            <li><strong>التكافؤ والتوزيع الإلكتروني:</strong>
+                <ul>
+                    <li>تحتوي جميع ذرات عناصر المجموعة في مستواها الأخير على 4 إلكترونات تتوزع في المستويين الفرعيين (sp).</li>
+                    <li>تميل للوصول إلى تكافؤ رباعي موجب (M<sup>4+</sup>)، أو ثنائي موجب (M<sup>2+</sup>) في الفلزات مثل القصدير والرصاص عند فقد إلكترونين فقط.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card card-high">
+        <h3>4. التفاعلات الكيميائية الأساسية ومعادلات التكافؤ</h3>
+        
+        <p><strong>أ. التفاعل مع الأكسجين (تكوين الأكاسيد):</strong></p>
+        <div class="equation-box">C + O<sub>2</sub> &#8594; CO<sub>2</sub></div>
+        <div class="equation-box">Si + O<sub>2</sub> &#8594; SiO<sub>2</sub></div>
+        <div class="equation-box">Sn + O<sub>2</sub> &#8594; SnO<sub>2</sub></div>
+
+        <p><strong>ب. التفاعل مع الأحماض (للفلزات وتصاعد غاز الهيدروجين):</strong></p>
+        <div class="equation-box">Sn<sub>(s)</sub> + 2HCl<sub>(aq)</sub> &#8594; SnCl<sub>2(aq)</sub> + H<sub>2(g)</sub>&#8593;</div>
+        <div class="equation-box">Pb<sub>(s)</sub> + H<sub>2</sub>SO<sub>4(aq)</sub> &#8594; PbSO<sub>4(aq)</sub> + H<sub>2(g)</sub>&#8593;</div>
+        <div class="equation-box">Sn<sub>(s)</sub> + 2HNO<sub>3(aq)</sub> &#8594; Sn(NO<sub>3</sub>)<sub>2(aq)</sub> + H<sub>2(g)</sub>&#8593;</div>
+
+        <p><strong>جـ. التفاعل مع الهالوجينات:</strong></p>
+        <div class="equation-box">Sn<sub>(s)</sub> + 2Cl<sub>2(g)</sub> &#8594; SnCl<sub>4(s)</sub></div>
+        <div class="equation-box">Pb<sub>(s)</sub> + 2F<sub>2(g)</sub> &#8594; PbF<sub>4(s)</sub></div>
+    </div>
+
+    <div class="card card-high">
+        <h3>5. مركبات الكربون وإجابات أهم علل</h3>
+        <ul>
+            <li><strong>أول أكسيد الكربون (CO):</strong> يُحضر بحرق الكربون في كمية محدودة من الأكسجين (2C + O<sub>2</sub> &#8594; 2CO). وهو غاز سام يتحد مع هيموجلوبين الدم ويمنع نقل الأكسجين. يُستخدم كعامل مختزل لاستخلاص الحديد من أكسيده:
+                <div class="equation-box">Fe<sub>2</sub>O<sub>3</sub> + 3CO &#8594; 2Fe + 3CO<sub>2</sub></div>
+            </li>
+            <li><strong>تحضير ثاني أكسيد الكربون (CO<sub>2</sub>) في المعمل:</strong> بتفاعل الرخام مع حمض الهيدروكلوريك المخفف:
+                <div class="equation-box">CaCO<sub>3</sub> + 2HCl &#8594; CaCl<sub>2</sub> + H<sub>2</sub>O + CO<sub>2</sub>&#8593;</div>
+            </li>
+            <li><strong>علل: الماس أشد صلابة من الجرافيت؟</strong> لأن الماس يرتبط بروابط تساهمية قوية مع 4 ذرات مجاورة (ثماني الأوجه)، بينما الجرافيت ترتبط كل ذرة بـ 3 ذرات في طبقات سداسية سهلة الانزلاق.</li>
+            <li><strong>علل: أغلب مركبات الكربون تساهمية بينما القصدير والرصاص أيونية؟</strong> لصغر حجم ذرة الكربون وارتفاع طاقة تأينها فيصعب فقد الإلكترونات، بينما الفلزات أسفل المجموعة كِبَار الحجم وطاقة تأينها أقل فتميل لفقد الإلكترونات.</li>
+        </ul>
+    </div>
+
+    <!-- ثانياً: متوسط الأهمية -->
+    <div class="section-title mid-importance">
+        <span>⚡</span> ثانياً: متوسط الأهمية (الاستخدامات والأهمية الحيوية)
+    </div>
+
+    <div class="card card-mid">
+        <h3>1. استخدامات الكربون والجرافيت</h3>
+        <ul>
+            <li><strong>الماس:</strong> لصناعة الحلي، وأدوات ثقب وطحن وقطع الزجاج (لصلابته).</li>
+            <li><strong>الجرافيت:</strong> صناعة أقلام الرصاص، الأقطاب الكهربائية، المولدات، وألياف الكربون (المستخدمة في المقاتلات الحربية مثل طائرة الشبح).</li>
+        </ul>
+    </div>
+
+    <div class="card card-mid">
+        <h3>2. استخدامات السيليكون</h3>
+        <ul>
+            <li>يدخل في صناعة الزجاج والسيليكات.</li>
+            <li><strong>السيليكون النقي:</strong> صناعة الأجهزة الإلكترونية (الراديو، التلفزيون، الكمبيوتر، الترانزيستور)، الخلايا الضوئية، والألياف الضوئية لنقل الاتصالات.</li>
+            <li><strong>سبائك السيليكون:</strong> مثل كربيد السيليكون لصناعة المناشير والصلب.</li>
+        </ul>
+    </div>
+
+    <div class="card card-mid">
+        <h3>3. استخدامات بقية العناصر (القصدير والرصاص)</h3>
+        <ul>
+            <li><strong>القصدير:</strong> صناعة العلَب الغذائية المعبأة (لحفظ الأغذية من الصدأ).</li>
+            <li><strong>الرصاص:</strong> صناعة البطاريات، أدوات السباكة، الستار الواقي من الإشعاعات، والطِلاء.</li>
+        </ul>
+        <div class="note">ملاحظة: تم حظر بعض استخدامات الرصاص لاحقاً لآثاره الضارة والسامة على البيئة والصحة.</div>
+    </div>
+
+    <div class="card card-mid">
+        <h3>4. وجود الكربون في الطبيعة والأحماض</h3>
+        <ul>
+            <li>يوجد حراً على شكل (ماس وجرافيت).</li>
+            <li>يوجد في صورة كربونات المعادن (كالسيوم، ماغنسيوم، صوديوم)، مثل خام <strong>الدولوميت</strong> (CaCO<sub>3</sub>&#183;MgCO<sub>3</sub>).</li>
+            <li>يوجد كغاز ثاني أكسيد الكربون ناتج عن التنفس وتحلل المواد العضوية.</li>
+            <li>يدخل في الوقود (البترول، الغاز الطبيعي، الفحم) وفي أجساد الكائنات الحية (البروتين، الدهون، السكر، الفيتامينات).</li>
+            <li><strong>تحضير حمض الكربونيك (H<sub>2</sub>CO<sub>3</sub>):</strong> بإمرار ثاني أكسيد الكربون في الماء:
+                <div class="equation-box">H<sub>2</sub>O + CO<sub>2</sub> &#8594; H<sub>2</sub>CO<sub>3</sub></div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ثالثاً: أقل أهمية -->
+    <div class="section-title low-importance">
+        <span>📌</span> ثالثاً: أقل أهمية (للمعرفة العامة وسياق الدرس)
+    </div>
+
+    <div class="card card-low">
+        <ul>
+            <li><strong>القدرة على الارتباط:</strong> ينفرد الكربون بقدرة هائلة على الارتباط بنفسه لتكوين سلاسل وحلقات طويلة (أساس الكيمياء العضوية)، بينما يقل ذلك في السيليكون.</li>
+            <li><strong>عنصر الأنبيونكوادبوم (Uuq<sup>114</sup>):</strong> عنصر صناعي تم اكتشافه حديثاً، تقع خواصه قيد الدراسة، ويشغل العمود الرأسي رقم (14) في الجدول الدوري.</li>
+            <li><strong>الصور غير البلورية للكربون:</strong> مثل الفحم الحجري، الفحم النباتي، فحم الكوك، وفحم العظام.</li>
+            <li><strong>مادة الأسبستوس (Asbestos):</strong> تتكون من السيليكات وكانت تُستخدم لمقاومة الحرارة، ولكن أوقف استخدامها نظراً لأن استنشاق غبارها يسبب سرطان الرئة.</li>
+        </ul>
+    </div>
+
+</div>
+</body>
+<script src="script/scriptAll.js" type="text/javascript"></script>
+<script src="script/login.js" type="text/javascript"></script>
+<script src="script/quiz.js" type="text/javascript"></script>
+<script src="script/orderStudent.js" type="text/javascript"></script>
+
+<script type="text/javascript" charset="utf-8"></script>
+</html>
